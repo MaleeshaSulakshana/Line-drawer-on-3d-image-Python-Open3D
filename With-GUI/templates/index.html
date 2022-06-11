@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>3D Line Drawer</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Tab icon -->
+    <link rel="icon" type="image/png" href="static/images/logo.png" />
+    <!-- Bootstrap -->
+    <link rel="stylesheet" type="text/css" href="static/vendor/bootstrap/css/bootstrap.min.css" />
+    <!-- Fonts -->
+    <link rel="stylesheet" type="text/css" href="static/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="static/fonts/iconic/css/material-design-iconic-font.min.css">
+    <link rel="stylesheet" type="text/css" href="static/fonts/linearicons-v1.0.0/icon-font.min.css">
+    <!-- Animations -->
+    <link rel="stylesheet" type="text/css" href="static/vendor/animate/animate.css">
+    <!-- Hamburger - mobile view menu icon -->
+    <link rel="stylesheet" type="text/css" href="static/vendor/css-hamburgers/hamburgers.min.css">
+    <!-- Width height manage -->
+    <link rel="stylesheet" type="text/css" href="static/vendor/slick/slick.css">
+    <!-- Custom css -->
+    <link rel="stylesheet" type="text/css" href="static/css/util.css">
+    <link rel="stylesheet" type="text/css" href="static/css/main.css">
+    <link rel="stylesheet" type="text/css" href="static/css/file_input.css">
+    <script src="static/vendor/jquery/jquery-3.2.1.min.js"></script>
+    <script src="static/vendor/sweetalert/sweetalert2@11.js"></script>
+
+</head>
+
+<body class="animsition">
+
+    <!-- Banner -->
+    <section class="section-slide">
+        <div class="wrap-slick1">
+            <div class="slick1">
+                <div class="item-slick1" style="background-image: url(static/images/bg_icon.jpg);">
+                    <div class="container h-full">
+                        <div class="flex-col-l-m h-full p-t-100 p-b-30 respon5">
+                            <div class="layer-slick1 animated visible-false" data-appear="fadeInDown" data-delay="0">
+                                <span class="text-white ltext-101 cl2 respon2">
+                                    Draw 3D Lines On
+                                </span>
+                            </div>
+
+                            <div class="layer-slick1 animated visible-false" data-appear="fadeInUp" data-delay="800">
+                                <h2 class="text-white ltext-201 cl2 p-t-19 p-b-43 respon1">
+                                    YOUR POINT CLOUD
+                                </h2>
+                            </div>
+
+                            <div class="d-flex layer-slick1 animated visible-false" data-appear="zoomIn"
+                                data-delay="1600">
+
+                                <div class="js-show-drawer">
+                                    <a href="#"
+                                        class="bg-dark flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 mr-3">
+                                        DRAW LINES
+                                    </a>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </section>
+
+    <!-- Show upload panel -->
+    <div class="wrap-header js-panel-draw">
+        <div class="s-full js-hide-drawer"></div>
+
+        <div class="header-panel flex-col-l p-l-65 p-r-25">
+            <div class="header-panel-title flex-w flex-sb-m p-b-8">
+                <span class="mtext-103 cl2">
+                    Draw Electricity Lines
+                </span>
+                <div class="fs-35 lh-10 cl2 p-lr-5 pointer hov-cl1 trans-04 js-hide-drawer">
+                    <i class="zmdi zmdi-close"></i>
+                </div>
+            </div>
+
+            <div class="header-panel-content flex-w js-pscroll">
+                <br><br><br><br>
+
+                <form id="points_drawer_form" method="POST" action="" enctype="multipart/form-data">
+
+                    <div class="form-group">
+                        <label>Upload point cloud</label>
+                        <input type="file" name="img[]" class="file-upload-default" id="point_cloud" accept=".ply,.xyz">
+                        <div class="input-group col-xs-12">
+                            <input type="text" class="form-control file-upload-info" disabled
+                                placeholder="Upload point cloud" required>
+                            <span class="input-group-append">
+                                <button class="file-upload-browse btn btn-primary" type="button">Upload</button>
+                            </span>
+                        </div>
+                    </div>
+
+                    <br>
+
+                    <div class="form-group">
+                        <label>Upload points text</label>
+                        <input type="file" name="img[]" class="file-upload-default" id="point_text" accept=".txt">
+                        <div class="input-group col-xs-12">
+                            <input type="text" class="form-control file-upload-info" disabled
+                                placeholder="Upload points text" required>
+                            <span class="input-group-append">
+                                <button class="file-upload-browse btn btn-primary" type="button">Upload</button>
+                            </span>
+                        </div>
+                    </div>
+
+                    <br>
+
+                    <div class="p-t-18">
+                        <button type="submit" id="btnDrawLines"
+                            class="flex-c-m stext-101 cl0 size-103 bg1 bor1 hov-btn2 p-lr-15 trans-04"
+                            name='upload_image_submit' id="upload_image_submit">
+                            Draw Lines
+                        </button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg3">
+        <div class="container">
+            <p class="stext-107 cl6 txt-center pt-2 pb-2">
+                Copyright &copy; 2021 All rights reserved | <a href="tel:0702669019">Misura</a>
+            </p>
+        </div>
+    </footer>
+
+    <!-- Back to top -->
+    <div class="btn-back-to-top" id="myBtn">
+        <span class="symbol-btn-back-to-top">
+            <i class="zmdi zmdi-chevron-up"></i>
+        </span>
+    </div>
+
+    <!-- Js -->
+    <script>
+
+        $(function () {
+            $('#btnDrawLines').click(function () {
+
+                var form_data = new FormData();
+                form_data.append('point_cloud', $('#point_cloud').prop('files')[0]);
+                form_data.append('point_text', $('#point_text').prop('files')[0]);
+
+                $('.js-panel-draw').removeClass('show-header-panel');
+                Swal.fire({
+                    title: 'Waiting for drawing lines!',
+                    imageUrl: "static/images/icons/hourglassx100.gif",
+                    showConfirmButton: false,
+                    closeOnClickOutside: false,
+                    allowOutsideClick: false,
+                    allowEscapeKey: false,
+                });
+
+                $.ajax({
+                    url: '/drawing_process',
+                    enctype: 'multipart/form-data',
+                    data: form_data,
+                    contentType: false,
+                    cache: false,
+                    processData: false,
+                    type: 'POST',
+                })
+                    .done(function (data) {
+                        swal.close();
+                        if (data.error) {
+                            Swal.fire("Points Drawer", data.error, "warning");
+                        }
+                        else if (data.success) {
+                            Swal.fire("Points Drawer", data.success, "success");
+                        }
+                    });
+
+                event.preventDefault();
+                return false;
+            });
+        });
+
+        $('.js-hide-drawer-details').on('click', function () {
+            $('.js-panel-draw-details').removeClass('show-header-panel');
+        });
+    </script>
+
+    <script src="static/vendor/animsition/js/animsition.min.js"></script>
+    <script src="static/vendor/slick/slick.min.js"></script>
+    <script src="static/js/slick-custom.js"></script>
+    <script src="static/js/file-upload.js"></script>
+    <script src="static/js/main.js"></script>
+
+</body>
+
+</html>
